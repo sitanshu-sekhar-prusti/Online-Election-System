@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Indian Election System</title>
+
+    <style>
+
+        body{
+            margin:0;
+            padding:0;
+            font-family:Arial;
+            background:black;
+            color:white;
+        }
+
+        .container{
+            width:800px;
+            margin:auto;
+            margin-top:20px;
+            background:#1c1c1c;
+            padding:20px;
+            border-radius:15px;
+            box-shadow:0px 0px 20px white;
+        }
+
+        h1{
+            text-align:center;
+            color:yellow;
+        }
+
+        input{
+            width:97%;
+            padding:10px;
+            margin-top:10px;
+            border-radius:5px;
+            border:none;
+            font-size:16px;
+        }
+
+        .party{
+            border:2px solid white;
+            margin-top:20px;
+            padding:15px;
+            border-radius:10px;
+            text-align:center;
+            background:#2b2b2b;
+        }
+
+        .logo{
+            font-size:60px;
+        }
+
+        button{
+            padding:10px 20px;
+            font-size:16px;
+            background:darkblue;
+            color:white;
+            border:none;
+            border-radius:5px;
+            cursor:pointer;
+        }
+
+        button:hover{
+            background:green;
+        }
+
+        table{
+            width:100%;
+            margin-top:20px;
+            border-collapse:collapse;
+            background:white;
+            color:black;
+        }
+
+        table,th,td{
+            border:1px solid black;
+            padding:10px;
+            text-align:center;
+        }
+
+        #result{
+            margin-top:20px;
+            color:lightgreen;
+            font-size:20px;
+            text-align:center;
+        }
+
+        #winner{
+            margin-top:20px;
+            color:yellow;
+            text-align:center;
+            font-size:28px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>INDIAN ONLINE ELECTION SYSTEM</h1>
+
+    <input type="text" id="name" placeholder="Enter Voter Name">
+
+    <input type="number" id="age" placeholder="Enter Age">
+
+    <input type="text" id="voterid" placeholder="Enter Voter ID">
+
+    <h2>Select Candidate</h2>
+
+    <!-- BJP -->
+
+    <div class="party">
+
+        <div class="logo">🪷</div>
+
+        <h2>BJP</h2>
+
+        <h3>Candidate: Narendra Modi</h3>
+
+        <button onclick="vote('BJP','Narendra Modi')">
+            Vote BJP Candidate
+        </button>
+
+    </div>
+
+    <!-- BJD -->
+
+    <div class="party">
+
+        <div class="logo">🐚</div>
+
+        <h2>BJD</h2>
+
+        <h3>Candidate: Naveen Patnaik</h3>
+
+        <button onclick="vote('BJD','Naveen Patnaik')">
+            Vote BJD Candidate
+        </button>
+
+    </div>
+
+    <!-- TJD -->
+
+    <div class="party">
+
+        <div class="logo">☀️</div>
+
+        <h2>TJD</h2>
+
+        <h3>Candidate: Sitanshu Prusti</h3>
+
+        <button onclick="vote('TJD','Sitanshu Prusti')">
+            Vote TJD Candidate
+        </button>
+
+    </div>
+
+    <div id="result"></div>
+
+    <table>
+
+        <tr>
+            <th>Party</th>
+            <th>Candidate</th>
+            <th>Total Votes</th>
+        </tr>
+
+        <tr>
+            <td>BJP</td>
+            <td>Narendra Modi</td>
+            <td id="bjpVotes">0</td>
+        </tr>
+
+        <tr>
+            <td>BJD</td>
+            <td>Naveen Patnaik</td>
+            <td id="bjdVotes">0</td>
+        </tr>
+
+        <tr>
+            <td>TJD</td>
+            <td>Sitanshu Prusti</td>
+            <td id="tjdVotes">0</td>
+        </tr>
+
+    </table>
+
+    <h2 id="winner"></h2>
+
+</div>
+
+<script>
+
+let votedIDs = [];
+
+let votes = {
+    BJP:0,
+    BJD:0,
+    TJD:0
+};
+
+function vote(party,candidate)
+{
+    let name = document.getElementById("name").value;
+
+    let age = document.getElementById("age").value;
+
+    let voterid = document.getElementById("voterid").value;
+
+    if(name=="" || age=="" || voterid=="")
+    {
+        alert("Please fill all details");
+        return;
+    }
+
+    if(age < 18)
+    {
+        alert("Age must be 18 or above");
+        return;
+    }
+
+    if(votedIDs.includes(voterid))
+    {
+        alert("This Voter ID has already voted");
+        return;
+    }
+
+    votedIDs.push(voterid);
+
+    votes[party]++;
+
+    document.getElementById("result").innerHTML =
+    "Vote Submitted Successfully";
+
+    document.getElementById("bjpVotes").innerHTML = votes.BJP;
+
+    document.getElementById("bjdVotes").innerHTML = votes.BJD;
+
+    document.getElementById("tjdVotes").innerHTML = votes.TJD;
+
+    showWinner();
+}
+
+function showWinner()
+{
+    let winner = "";
+
+    if(votes.BJP > votes.BJD && votes.BJP > votes.TJD)
+    {
+        winner = "Winning Party : BJP";
+    }
+
+    else if(votes.BJD > votes.BJP && votes.BJD > votes.TJD)
+    {
+        winner = "Winning Party : BJD";
+    }
+
+    else if(votes.TJD > votes.BJP && votes.TJD > votes.BJD)
+    {
+        winner = "Winning Party : TJD";
+    }
+
+    else
+    {
+        winner = "Election Tie";
+    }
+
+    document.getElementById("winner").innerHTML = winner;
+}
+
+</script>
+
+</body>
+</html>
